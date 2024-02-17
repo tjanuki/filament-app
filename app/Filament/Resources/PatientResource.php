@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PatientType;
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Models\Patient;
@@ -25,11 +26,7 @@ class PatientResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('type')
-                    ->options([
-                        'cat' => 'Cat',
-                        'dog' => 'Dog',
-                        'rabbit' => 'Rabbit',
-                    ]),
+                    ->options(PatientType::class),
                 Forms\Components\DatePicker::make('date_of_birth')
                     ->required()
                     ->maxDate(now()),
@@ -59,14 +56,18 @@ class PatientResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('date_of_birth'),
-                Tables\Columns\TextColumn::make('owner.name'),
+                Tables\Columns\TextColumn::make('date_of_birth')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('owner.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('owner.email')
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type')
+                    ->options(PatientType::class),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
