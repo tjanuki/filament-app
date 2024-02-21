@@ -23,14 +23,19 @@ class PatientResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->translateLabel()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('type')
+                    ->translateLabel()
                     ->options(PatientType::class),
                 Forms\Components\DatePicker::make('date_of_birth')
+                    ->translateLabel()
+//                    ->label(__('Date Of Birth'))
                     ->required()
                     ->maxDate(now()),
                 Forms\Components\Select::make('owner_id')
+                    ->translateLabel()
                     ->relationship('owner', 'name')
                     ->searchable()
                     ->preload()
