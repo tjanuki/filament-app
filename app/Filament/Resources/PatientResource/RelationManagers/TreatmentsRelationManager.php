@@ -17,13 +17,16 @@ class TreatmentsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\TextInput::make('description')
+                    ->translateLabel()
                     ->required()
                     ->maxLength(255)
                     ->columnSpan('full'),
                 Forms\Components\Textarea::make('notes')
+                    ->translateLabel()
                     ->maxLength(65535)
                     ->columnSpan('full'),
                 Forms\Components\TextInput::make('price')
+                    ->translateLabel()
                     ->numeric()
                     ->prefix('CAD')
                     ->maxValue(9999)
@@ -35,16 +38,17 @@ class TreatmentsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('description')
             ->columns([
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('price')
+                Tables\Columns\TextColumn::make('description')->translateLabel(),
+                Tables\Columns\TextColumn::make('price')->translateLabel()
                     ->money('CAD')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')->translateLabel()
                     ->dateTime('Y-m-d H:i:s')
             ])
             ->filters([
                 //
             ])
+            ->heading(__('Treatments'))
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
             ])

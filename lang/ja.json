@@ -1,6 +1,13 @@
 {
+    "Patient": "患者",
     "Name": "名前",
     "Type": "タイプ",
     "Date of birth": "生年月日",
-    "Owner": "オーナー"
+    "Owner": "オーナー",
+    "Treatments": "治療",
+    "Treatment": "治療",
+    "Description": "説明",
+    "Notes": "メモ",
+    "Price": "価格",
+    "Created at": "作成日"
 }

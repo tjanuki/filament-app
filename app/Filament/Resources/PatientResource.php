@@ -31,7 +31,6 @@ class PatientResource extends Resource
                     ->options(PatientType::class),
                 Forms\Components\DatePicker::make('date_of_birth')
                     ->translateLabel()
-//                    ->label(__('Date Of Birth'))
                     ->required()
                     ->maxDate(now()),
                 Forms\Components\Select::make('owner_id')
@@ -75,7 +74,7 @@ class PatientResource extends Resource
                     ->options(PatientType::class),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -98,5 +97,10 @@ class PatientResource extends Resource
             'create' => Pages\CreatePatient::route('/create'),
             'edit' => Pages\EditPatient::route('/{record}/edit'),
         ];
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Patient');
     }
 }

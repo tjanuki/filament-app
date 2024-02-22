@@ -27,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
             $switch
                 ->locales(['en', 'ja']);
         });
+
+//        CreateAction::configureUsing(function (CreateAction $action) {
+//            $action->slideOver();
+//        });
     }
 }
