@@ -6,7 +6,6 @@ use App\Enums\PatientType;
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Models\Patient;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,39 +20,7 @@ class PatientResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->translateLabel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('type')
-                    ->translateLabel()
-                    ->options(PatientType::class),
-                Forms\Components\DatePicker::make('date_of_birth')
-                    ->translateLabel()
-                    ->required()
-                    ->maxDate(now()),
-                Forms\Components\Select::make('owner_id')
-                    ->translateLabel()
-                    ->relationship('owner', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->label('Email address')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
-                            ->label('Phone number')
-                            ->tel()
-                            ->required()
-                    ])
-                    ->required()
-            ]);
+            ->schema(Patient::getForm());
     }
 
     public static function table(Table $table): Table
@@ -74,7 +41,8 @@ class PatientResource extends Resource
                     ->options(PatientType::class),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -96,6 +64,7 @@ class PatientResource extends Resource
             'index' => Pages\ListPatients::route('/'),
             'create' => Pages\CreatePatient::route('/create'),
             'edit' => Pages\EditPatient::route('/{record}/edit'),
+            'view' => Pages\ViewPatient::route('/{record}'),
         ];
     }
 
