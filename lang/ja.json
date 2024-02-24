@@ -9,5 +9,6 @@
     "Description": "説明",
     "Notes": "メモ",
     "Price": "価格",
-    "Created at": "作成日"
+    "Created at": "作成日",
+    "Email": "メールアドレス"
 }

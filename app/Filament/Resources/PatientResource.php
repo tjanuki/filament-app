@@ -7,6 +7,8 @@ use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Models\Patient;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -28,13 +30,19 @@ class PatientResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type'),
+                Tables\Columns\TextColumn::make('type')
+                    ->translateLabel()
+                ,
                 Tables\Columns\TextColumn::make('date_of_birth')
+                    ->translateLabel()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('owner.name')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('owner.email')
+                    ->label(__('Email'))
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
@@ -50,6 +58,18 @@ class PatientResource extends Resource
                 ]),
             ]);
     }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('name')->translateLabel(),
+                TextEntry::make('type')->translateLabel()->badge(),
+                TextEntry::make('date_of_birth')->translateLabel(),
+                TextEntry::make('owner.name'),
+            ]);
+    }
+
 
     public static function getRelations(): array
     {

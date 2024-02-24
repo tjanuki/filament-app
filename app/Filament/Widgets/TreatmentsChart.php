@@ -11,6 +11,10 @@ class TreatmentsChart extends ChartWidget
 {
     protected static ?string $heading = 'Chart';
 
+    protected int|string|array $columnSpan = 'full';
+
+    protected static ?string $maxHeight = '200px';
+
     protected function getData(): array
     {
         $data = Trend::model(Treatment::class)
